@@ -1,0 +1,6 @@
+---
+  all:
+    children:
+      nameservers:
+        hosts:
+          ns0[1:2]:

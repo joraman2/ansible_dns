@@ -1,0 +1,25 @@
+; {{ ansible_managed }}
+;
+; BIND data file for local loopback interface
+;
+$TTL	604800
+@	IN	SOA	basecamp.nemon. root.basecamp.nemon. (
+		{{ item.serial }}		; Serial
+		5m				; Refresh after 5 minutes
+		1m				; Retry after 1 mimnute
+		1w				; Expire after 1 week
+		1h )			; Negative caching TTL of 1 hour
+;
+@	IN	NS	ns01.home.lab.
+@	IN	A	{{ ip_boss }}
+@	IN	AAAA	::1
+
+{% if item.zone_type == "direct" %}
+{% for record in item.records %}
+{{ record.host }} IN {{ record.type | default('A') }} {{ record.target }}
+{% endfor %}
+{% else %}
+{% for record in item.records %}
+{{ record.target }} IN PTR {{ record.host}}. 
+{% endfor %}     
+{% endif %}

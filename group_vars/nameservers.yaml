@@ -1,0 +1,41 @@
+---
+ip_boss: "192.168.122.26"
+io_minion: "192.168.122.27"
+dns_zones:
+  - name: "home.lab"
+    file: "db.home.lab"
+    zone-type: "direct"
+    serial: "2022112101"
+    records:
+      - host: "ns01"
+        target: "192.168.122.26"
+
+      - host: "ns02"
+        target: "192.168.122.27"
+      
+      - host: "kube"
+        target: "192.168.0.105"
+
+      - host: "hypervisor"
+        target: "kube.home.lab"
+        type: "CNAME"
+
+  - name: "0.169.192.in-addr.arpa"
+    file: "db.192.168.0"
+    zone-type: "reverse"
+    serial: "2022112101"
+    records:        
+      -  host: "kube"
+         target: "105"
+      -  host: "hypervisor"
+         target: "105"
+
+  - name: "122.168.192.in-addr.arpa"
+    file: "db.192.168.122"
+    zone-type: "reverse"
+    serial: "2022112101"
+    records:
+      - host: "ns01"
+        target: "26"
+      - host: "ns02"
+        target: "27"     

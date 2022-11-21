@@ -1,0 +1,14 @@
+---
+  - hosts: nameservers
+    roles:
+      - bind_pkg
+    tags:
+      - install
+    become: yes
+
+  - hosts: nameservers
+    roles:
+      - bind_config
+    tags:
+      - config
+    become: yes

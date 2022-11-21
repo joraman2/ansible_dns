@@ -1,0 +1,3 @@
+---
+dns_role: "minion"
+type: "slave"
