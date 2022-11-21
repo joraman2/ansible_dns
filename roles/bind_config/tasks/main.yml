@@ -19,6 +19,17 @@
     notify:
       - restart bind   
 
+  - name: Zone rpz
+    template:
+      src: "templates/db.rpz.j2"
+      dest: "/etc/bind/db.rpz"
+      owner: root
+      group: bind
+      mode: 0644 
+    notify:
+      - restart bind 
+    when: dns_role == "master"  
+
   - name: Loop zones
     template:
       src: "templates/zones.j2"
