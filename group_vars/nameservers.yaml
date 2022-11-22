@@ -1,6 +1,6 @@
 ---
 ip_boss: "192.168.122.26"
-io_minion: "192.168.122.27"
+ip_minion: "192.168.122.27"
 dns_zones:
   - name: "home.lab"
     file: "db.home.lab"
