@@ -24,3 +24,10 @@
       mode: 0755
     when: dns_role == "minion"
 
+
+  - name: Allow service through firewall
+    firewalld:
+      port: 53/udp
+      permanent: yes
+      state: enabled
+      zone: public
