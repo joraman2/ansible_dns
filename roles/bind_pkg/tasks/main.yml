@@ -13,3 +13,14 @@
     yum:
       name: '*'
       state: latest
+
+
+  - name: Create cache folder for minion
+    file:
+      state: directory
+      path: /var/cache/named
+      owner: root
+      group: named
+      mode: 0755
+    when: dns_role == "minion"
+

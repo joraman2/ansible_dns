@@ -2,44 +2,44 @@
   - name: Configure forwarders
     template:
       src: "templates/named.conf.options.j2"
-      dest: "/etc/bind/named.conf.options"
+      dest: "/etc/named/named.conf.options"
       owner: root
-      group: bind
+      group: named
       mode: 0644
     notify:
-      - restart bind   
+      - restart named   
              
   - name: Configure zones
     template:
       src: "templates/named.conf.local.j2"
-      dest: "/etc/bind/named.conf.local"
+      dest: "/etc/named/named.conf.local"
       owner: root
-      group: bind
+      group: named
       mode: 0644
     notify:
-      - restart bind   
+      - restart named   
 
   - name: Zone rpz
     template:
       src: "templates/db.rpz.j2"
-      dest: "/etc/bind/db.rpz"
+      dest: "/etc/named/db.rpz"
       owner: root
-      group: bind
+      group: named
       mode: 0644 
     notify:
-      - restart bind 
-    when: dns_role == "master"  
+      - restart named 
+    when: dns_role == "boss"  
 
   - name: Loop zones
     template:
       src: "templates/zones.j2"
-      dest: "/etc/bind/{{ item.file }}"
+      dest: "/etc/named/{{ item.file }}"
       owner: root
-      group: bind
+      group: named
       mode: 0644
     with_items: "{{ dns_zones }}"     
     notify:
-      - restart bind  
-    when: dns_role == "master"
+      - restart named  
+    when: dns_role == "boss"
 
 

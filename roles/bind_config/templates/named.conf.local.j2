@@ -4,7 +4,7 @@
 
 // Consider adding the 1918 zones here, if they are not used in your
 // organization
-//include "/etc/bind/zones.rfc1918";
+//include "/etc/named/zones.rfc1918";
 
 {% for dns_zone in dns_zones  %}
 
@@ -13,12 +13,12 @@ zone "{{ dns_zone.name }}" {
 
 {% if dns_role == "boss" %}
 
-    file "/etc/bind/{{ dns_zone.file }}";
+    file "/etc/named/{{ dns_zone.file }}";
     allow-transfer { {{ ip_minion }}; };        
 	  also-notify { {{ ip_minion }}; };
 {% endif %}
 {% if dns_role == "minion" %}  
-    file "/etc/bind/{{ dns_zone.file }}";
+    file "/etc/named/{{ dns_zone.file }}";
     masters { {{ ip_boss }}; }; 
 {% endif%}
 };
@@ -28,7 +28,7 @@ zone "{{ dns_zone.name }}" {
 {% if dns_role == "boss" %}
 zone "rpz" {
   type master;
-  file "/etc/bind/db.rpz";
+  file "/etc/named/db.rpz";
   allow-transfer { {{ ip_minion }}; };        
   also-notify { {{ ip_minion }}; };
 #  notify yes;
@@ -38,7 +38,7 @@ zone "rpz" {
 {% if dns_role == "minion" %}
 zone "rpz" {
   type {{ type }};
-  file "/var/cache/bind/db.rpz";
+  file "/var/cache/named/db.rpz";
   masters { {{ip_boss}}; };
   notify yes;
 };
